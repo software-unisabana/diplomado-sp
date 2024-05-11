@@ -24,7 +24,7 @@ public class TransaccionService {
     bd.actualizarCuenta(destino);
   }
 
-  /*
+
   public void realizarTransferencia2(int monto, int numeroOrigen, int numeroDestino) {
     Cuenta origen = bd.obtenerCuenta(numeroOrigen);
     Cuenta destino = bd.obtenerCuenta(numeroDestino);
@@ -41,5 +41,5 @@ public class TransaccionService {
     bd.actualizarCuenta(destino);
   }
 
-   */
+
 }

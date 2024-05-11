@@ -35,7 +35,8 @@ class TransaccionServiceTest {
     //Rojo, Amarillo y verde
     //Verde: Todo esta bien. Amarillo: Una assertion fallo. Rojo: Algo exploto no controlado
   }
-/*
+
+
   @Test
   void Dado_cuentaInvalidaDestino_Cuando_trasfieraDinero_Entonces_arrojaException() {
     //Arrange
@@ -94,5 +95,5 @@ class TransaccionServiceTest {
     Mockito.verify(bd).actualizarCuenta(origen);
     Mockito.verify(bd).actualizarCuenta(destino);
   }
-*/
+
 }

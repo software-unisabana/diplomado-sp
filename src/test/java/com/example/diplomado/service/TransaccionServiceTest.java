@@ -3,6 +3,7 @@ package com.example.diplomado.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.diplomado.CuentaInvalidadException;
+import com.example.diplomado.LimiteTransaccionalException;
 import com.example.diplomado.SaldoInsuficienteException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -61,37 +62,29 @@ class TransaccionServiceTest {
   }
 
   @Test
-  void Dado_datosCorrectos_Cuando_transfieradinero_Entonces_modificaSaldos() {
+  void Dado_limiteExcedido_Cuando_intenteTransferirDinero_Entonces_arrojaException() {
     //Arrange
-    Cuenta origen = new Cuenta("123", 150);
-    Cuenta destino = new Cuenta("321", 50);
 
+    Cuenta origen = new Cuenta("123", 2200);
+    Cuenta destino = new Cuenta("321", 100);
     //Act
-    transaccionService.realizarTransferencia(25, origen, destino);
-
-    //Assertions
-    Assertions.assertEquals(125, origen.getSaldo());
-    Assertions.assertEquals(75, destino.getSaldo());
-    Mockito.verify(bd).actualizarCuenta(origen);
-    Mockito.verify(bd).actualizarCuenta(destino);
+    Assertions.assertThrows(LimiteTransaccionalException.class, () -> {
+      transaccionService.realizarTransferencia(2000, origen, destino);
+    });
   }
 
-
   @Test
-  void Dado_datosCorrectos_Cuando_transfieradinero2_Entonces_modificaSaldos() {
+  void Dado_datosCorrectos_Cuando_transfieradinero_Entonces_modificaSaldos() {
     //Arrange
-    Cuenta origen = new Cuenta("123", 150);
+    Cuenta origen = new Cuenta("123", 1000);
     Cuenta destino = new Cuenta("321", 50);
 
-    Mockito.when(bd.obtenerCuenta(123)).thenReturn(origen);
-    Mockito.when(bd.obtenerCuenta(321)).thenReturn(destino);
-
     //Act
-    transaccionService.realizarTransferencia2(25, 123, 321);
+    transaccionService.realizarTransferencia(1000, origen, destino);
 
     //Assertions
-    Assertions.assertEquals(125, origen.getSaldo());
-    Assertions.assertEquals(75, destino.getSaldo());
+    Assertions.assertEquals(0, origen.getSaldo());
+    Assertions.assertEquals(1050, destino.getSaldo());
     Mockito.verify(bd).actualizarCuenta(origen);
     Mockito.verify(bd).actualizarCuenta(destino);
   }

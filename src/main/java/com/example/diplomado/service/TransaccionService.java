@@ -3,7 +3,6 @@ package com.example.diplomado.service;
 import com.example.diplomado.CuentaInvalidadException;
 import com.example.diplomado.LimiteTransaccionalException;
 import com.example.diplomado.SaldoInsuficienteException;
-import com.example.diplomado.dto.TransferenciaDTO;
 
 public class TransaccionService {
 
@@ -16,7 +15,6 @@ public class TransaccionService {
     }
 
     public void realizarTransferencia(int monto, Cuenta origen, Cuenta destino) {
-        TransferenciaDTO dto = new TransferenciaDTO();
         if (origen.getNumeroCuenta().equals(destino.getNumeroCuenta())) {
             throw new CuentaInvalidadException(origen.getNumeroCuenta());
         }
